@@ -92,21 +92,23 @@ func main() {
 			service := style("Possible "+sig.Name+" detected", cyan, true, false)
 			fmt.Printf("\n%s %s: ", header, service)
 
-			fmt.Printf("Required ports %s are present\n",
+			fmt.Printf("Required ports %s are present",
 				joinPorts(sig.Required, green, true, false))
 
 			if len(sig.Optional) > 0 {
 				present := presentOptional(openPorts, sig.Optional)
 				if len(present) > 0 {
-					fmt.Printf("Optional ports %s are present\n",
+					fmt.Printf(", optional ports %s are present",
 						joinPorts(present, yellow, true, false))
 				}
 				missing := diff(sig.Optional, present)
 				if len(missing) > 0 {
-					fmt.Printf("Optional ports %s are missing\n",
+					fmt.Printf(", optional ports %s are missing",
 						joinPorts(missing, "", false, true))
 				}
 			}
+
+			fmt.Printf("\n")
 		}
 	}
 
