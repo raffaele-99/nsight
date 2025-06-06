@@ -98,12 +98,12 @@ func main() {
 			if len(sig.Optional) > 0 {
 				present := presentOptional(openPorts, sig.Optional)
 				if len(present) > 0 {
-					fmt.Printf(", optional ports %s are present",
+					fmt.Printf(" and optional ports %s are also present.",
 						joinPorts(present, yellow, true, false))
 				}
 				missing := diff(sig.Optional, present)
 				if len(missing) > 0 {
-					fmt.Printf(", optional ports %s are missing",
+					fmt.Printf(" Optional ports %s are missing.",
 						joinPorts(missing, "", false, true))
 				}
 			}
