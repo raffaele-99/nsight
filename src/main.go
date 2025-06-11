@@ -70,7 +70,7 @@ func main() {
 	}
 
 	if flag.NArg() != 1 {
-		fmt.Fprintln(os.Stderr, "Usage: nmap-insight [--no-color] <nmap -oN output file>")
+		fmt.Fprintln(os.Stderr, "Usage: nsight [--no-color] <nmap -oN output file>")
 		os.Exit(1)
 	}
 
@@ -90,7 +90,7 @@ func main() {
 			any = true
 			header := style("▶", green, true, false)
 			service := style("Possible "+sig.Name+" detected", cyan, true, false)
-			fmt.Printf("\n%s %s: ", header, service)
+			fmt.Printf("%s %s: ", header, service)
 
 			fmt.Printf("Required ports %s are present",
 				joinPorts(sig.Required, green, true, false))
@@ -107,14 +107,16 @@ func main() {
 						joinPorts(missing, "", false, true))
 				}
 			}
-
 			fmt.Printf("\n")
 		}
+
 	}
 
 	if !any {
 		fmt.Println(style("No composite service signatures recognised.", yellow, false, false))
 	}
+
+	fmt.Printf("\n")
 }
 
 // --- helpers -------------------------------------------------------------
@@ -145,8 +147,9 @@ func knownSignatures() []Signature {
 		{Name: "SMB / NetBIOS file share", Required: []int{139, 445}},
 		{Name: "Active Directory Domain Controller", Required: []int{53, 88, 389, 445, 464}, Optional: []int{636, 3268, 3269, 5985, 9389}},
 		{Name: "Windows RPC services (EPM + dynamic RPC)", Required: []int{135}},
+		{Name: "Windows Remote Management / WinRM", Required: []int{5985}, Optional: []int{5986}},
 		{Name: "NFS server (rpcbind + nfsd)", Required: []int{111, 2049}, Optional: []int{20048, 4045, 4049}},
-		{Name: "FTP (control + data)", Required: []int{20, 21}},
+		{Name: "FTP", Required: []int{21}, Optional: []int{20}},
 		{Name: "Mail stack (SMTP + POP)", Required: []int{25, 110}},
 		{Name: "Mail stack (SMTP + IMAP)", Required: []int{25, 143}},
 		{Name: "Mail stack (SMTP + IMAPS)", Required: []int{25, 993}},
